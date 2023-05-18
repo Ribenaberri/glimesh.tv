@@ -359,3 +359,14 @@ $fa-font-path: "/fa-fonts";
 .EventsTeam_Font {
     color: #288b8c
 }
+
+//homepage carousel
+
+.carousel-caption {
+    max-width: 100%;
+    width:100%;
+    background: rgba(15, 2, 46, 0.24);
+    left: 0;
+    padding: 10px;
+    justify-content: start;
+}

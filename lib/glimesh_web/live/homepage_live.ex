@@ -5,7 +5,7 @@ defmodule GlimeshWeb.HomepageLive do
   alias Glimesh.QueryCache
 
   alias GlimeshWeb.Channels.Components.ChannelPreview
-  alias GlimeshWeb.Channels.Components.VideoPlayer
+  alias GlimeshWeb.Channels.Components.CarouselPlayer
   alias GlimeshWeb.Events.Components.EventMedia
 
   alias Surface.Components.LiveRedirect
@@ -14,146 +14,21 @@ defmodule GlimeshWeb.HomepageLive do
   def render(assigns) do
     ~F"""
     <div class="fancy-bg pt-4">
-      {#if @random_channel}
-        <div class="container">
-          {#if not is_nil(@live_featured_event_channel)}
-            <div class="card shadow rounded">
-              <div class="row">
-                <div class="col-md-7">
-                  <VideoPlayer id="homepage-video-player" muted channel={@live_featured_event_channel} />
-                </div>
-                <div class="col-md-5 py-4 pr-4">
-                  <EventMedia event={@live_featured_event} show_img={false} />
-                </div>
-              </div>
-            </div>
-          {#else}
-            <div class="row">
-              <div class="col-md-7">
-                <div class="card shadow rounded">
-                  <VideoPlayer id="homepage-video-player" muted channel={@random_channel} />
-                  <div class="d-flex align-items-start p-2">
-                    <img
-                      src={Glimesh.Avatar.url({@random_channel.user.avatar, @random_channel.user}, :original)}
-                      alt={@random_channel.user.displayname}
-                      width="48"
-                      height="48"
-                      class={[
-                        "img-avatar mr-2",
-                        if(Glimesh.Accounts.can_receive_payments?(@random_channel.user),
-                          do: "img-verified-streamer"
-                        )
-                      ]}
-                    />
-                    <div class="pl-1 pr-1">
-                      <h6 class="mb-0 mt-1 text-wrap pride_channel_title">
-                        {@random_channel.title}
-                      </h6>
-                      <p class="mb-0 card-stream-username">
-                        {@random_channel.user.displayname}
-                        <span class="badge badge-info">
-                          {Glimesh.Streams.get_channel_language(@random_channel)}
-                        </span>
-                        {#if @random_channel.mature_content}
-                          <span class="badge badge-warning ml-1">{gettext("Mature")}</span>
-                        {/if}
-                      </p>
-                    </div>
-                    <LiveRedirect
-                      to={~p"/#{@random_channel.user.username}"}
-                      class="ml-auto text-md-nowrap mt-1 btn btn-primary"
-                    >{gettext("Watch Live")}
-                    </LiveRedirect>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-5 py-4 pr-4">
-                <div class="d-flex flex-column align-items-center justify-content-center h-100">
-                  <h2 class="font-weight-bold">
-                    <span class="text-color-alpha">{gettext("Next-Gen")}</span>
-                    {gettext("Live Streaming!")}
-                  </h2>
-                  <p class="lead">
-                    {gettext(
-                      "The first live streaming platform built around truly real time interactivity. Our streams are warp speed, our chat is blazing, and our community is thriving."
-                    )}
-                  </p>
-
-                  {#if @current_user}
-                    <div class="d-flex flex-row justify-content-around mt-3">
-                      {link(gettext("Create Your Channel"),
-                        to: ~p"/users/settings/stream",
-                        class: "btn btn-info mr-4"
-                      )}
-                      {link(gettext("Setup Payouts"),
-                        to: ~p"/users/settings/profile",
-                        class: "btn btn-info"
-                      )}
-                    </div>
-                  {#else}
-                    <p class="lead">
-                      {gettext("Join %{user_count} others!", user_count: @user_count)}
-                    </p>
-                    {link(gettext("Register Your Account"),
-                      to: ~p"/users/register",
-                      class: "btn btn-primary btn-lg"
-                    )}
-                  {/if}
-                </div>
-              </div>
-            </div>
-          {/if}
-        </div>
-      {#else}
-        <div class="container">
-          <div class="position-relative overflow-hidden p-3 p-md-5">
-            <div class="col-md-12 p-lg-4 mx-auto">
-              <h1 class="display-3 font-weight-bold">
-                <span class="text-color-alpha">{gettext("Next-Gen")}</span>
-                {gettext("Live Streaming!")}
-              </h1>
-              <p class="lead" style="max-width: 550px;">
-                {gettext(
-                  "The first live streaming platform built around truly real time interactivity. Our streams are warp speed, our chat is blazing, and our community is thriving."
-                )}
-              </p>
-
-              {#if @current_user}
-                {link(gettext("Customize Your Profile"),
-                  to: ~p"/users/settings/profile",
-                  class: "btn btn-info mt-3"
-                )}
-                {link(gettext("Create Your Channel"),
-                  to: ~p"/users/settings/stream",
-                  class: "btn btn-info mt-3"
-                )}
-                {link(gettext("Setup Payouts"),
-                  to: "/users/settings/profile",
-                  class: "btn btn-info mt-3"
-                )}
-              {#else}
-                <p class="lead">
-                  {gettext("Join %{user_count} others!", user_count: @user_count)}
-                </p>
-                {link(gettext("Register Your Account"),
-                  to: ~p"/users/register",
-                  class: "btn btn-primary btn-lg mt-3"
-                )}
-              {/if}
-            </div>
-          </div>
-        </div>
-      {/if}
+    <div class="container">
+    <div>
+    <CarouselPlayer channels={@channels} id="top-carousel" muted />
+    </div>
+    </div>
 
       {#if length(@channels) > 0}
-        <div class="container container-stream-list">
-          <div class="row">
-            {#for channel <- @channels}
-              <ChannelPreview channel={channel} class="col-sm-12 col-md-6 col-xl-4 mt-2 mt-md-4" />
-            {/for}
-          </div>
-        </div>
-      {/if}
+      <div class="container container-stream-list">
+      <div class="row">
+      {#for channel <- @channels}
+       <ChannelPreview channel={channel} class="col-sm-12 col-md-6 col-xl-4 mt-2 mt-md-4" />
+      {/for}
+      </div>
+       </div>
+       {/if}
 
       <div class="container">
         <div class="mt-4 px-4 px-lg-0">
@@ -182,13 +57,15 @@ defmodule GlimeshWeb.HomepageLive do
     # If the viewer is logged in set their locale, otherwise it defaults to English
     if session["locale"], do: Gettext.put_locale(session["locale"])
 
-    channels = get_cached_channels()
+    raw_channels = get_cached_channels()
 
-    random_channel = get_random_channel(channels)
+    random_channel = get_random_channel(raw_channels)
 
     upcoming_event = Glimesh.EventsTeam.get_one_upcoming_event()
 
     [live_featured_event, live_featured_event_channel] = get_random_event()
+
+    channels = if is_nil(live_featured_event_channel), do: [ raw_channels ], else: [ live_featured_event_channel | raw_channels ]
 
     user_count = Glimesh.Accounts.count_users()
 
@@ -201,7 +78,7 @@ defmodule GlimeshWeb.HomepageLive do
         end
 
       if live_channel_id do
-        VideoPlayer.play("homepage-video-player", Map.get(session, "country"))
+        CarouselPlayer.play("top-carousel", Map.get(session, "country"))
 
         Glimesh.Presence.track_presence(
           self(),
