@@ -1,0 +1,95 @@
+//homepage carousel
+
+.carousel-control-next {
+    background: url("/images/homepage/Gaming2.png") no-repeat center; 
+    filter:blur(1px);
+    border-width: 7.5px 10px 7.5px 0;
+    border-color: transparent rgba(255, 255, 255, 1) transparent transparent;
+    color: #67EFD6;
+    font-size: 42px;
+    right: -150px;
+    width: 150px;
+    height: 562px;
+}
+    .carousel-control-next:hover{
+        color: darken(#67EFD6, 40%);
+        filter:blur(6px)
+    }
+
+.carousel-control-prev {
+    background: url("/images/homepage/Gaming3.png") no-repeat center; 
+    filter:blur(1px);
+    border-width: 7.5px 0 7.5px 10px;
+    border-color: transparent transparent transparent rgba(255, 255, 255, 1);
+    color: #67EFD6;
+    font-size: 42px;
+    left: -150px;
+    width: 150px;
+    height: 562px;
+}
+
+    .carousel-control-prev:hover{
+        color: darken(#67EFD6, 40%);
+        filter:blur(6px);
+}
+
+.carousel-homepage-bg{
+    background: url("/images/homepage/HomepageNewBG (1).png") no-repeat top center;
+    background-attachment: fixed;
+    position: relative;
+    padding-bottom: 90px;
+    min-height: 900px;}  
+
+
+.carousel-homepage-btn{
+    color: #0F1729;
+    font-weight: bold;
+    background-color: #67EFD6;
+    border-radius: 20px;
+}
+
+.carousel-homepage-card{
+    background-color: RGBA(33, 43, 57, 0.2);
+    color: white;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    overflow-wrap: break-word;
+    width: 1000px;
+}
+
+.carousel-next-gen{
+    background-color: rgba(255, 255, 255, 0);
+    border-color: rgba(255, 255, 255, 0);
+    width: 670px;
+    padding-right: 50px;
+    font-size: 20px;
+    text-align: right;
+}
+
+.carousel-first-menu{
+    background-color: rgba(33, 42, 57, 0.4);
+    border-color: rgba(255, 255, 255, 0);
+    width: 200px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 20px;
+    text-align: left;
+    padding-top: 10px;
+}
+
+.carousel-image-left{
+    background: url("/images/homepage/Gaming2.png") no-repeat center; 
+    filter:blur(0px);
+    border-width: 7.5px 10px 7.5px 0;
+    border-color: transparent rgba(255, 255, 255, 1) transparent transparent;
+    color: #67EFD6;
+    font-size: 42px;
+    right: -200px;
+    width: 200px;
+    height: 440px;
+
+}
+
+.carousel-container{
+    width: 1000px;
+}
