@@ -13,22 +13,46 @@ defmodule GlimeshWeb.HomepageLive do
   @impl true
   def render(assigns) do
     ~F"""
-    <div class="fancy-bg pt-4">
-    <div class="container">
-    <div>
-    <CarouselPlayer channels={@channels} id="top-carousel" muted />
-    </div>
-    </div>
+    <div class="carousel-homepage-bg pt-4">
+      <div class="row mt-6">
+        <div class="col-lg-2 user-sidebar">
+          <div class="card carousel-first-menu" style="right: -50px">
+            <div class="list-group list-group-flush">
+            <h4> Filter </h4><p></p>
+              <p>{gettext("Events")}</p>
+              <p>{gettext("Live Streams")}</p>
+              <p>{gettext("Categories")}</p>
+            </div>
+          </div><br>
+          <div class="row mt-6">
+        <div class="col-lg-2 user-sidebar">
+          <div class="card carousel-first-menu" style="right: -50px">
+            <div class="list-group list-group-flush">
+              <p><i class="fas fa-user fa-fw" /> {gettext("Gaming")}</p>
+              <p><i class="fas fa-user fa-fw" /> {gettext("Art")}</p>
+              <p><i class="fas fa-user fa-fw" /> {gettext("Music")}</p>
+              <p><i class="fas fa-user fa-fw" /> {gettext("Tech")}</p>
+              <p><i class="fas fa-user fa-fw" /> {gettext("IRL")}</p>
+              <p><i class="fas fa-user fa-fw" /> {gettext("Education")}</p>
+            </div>
+          </div>
+        </div>
+        </div>
+        </div>
+        <div>
+          <CarouselPlayer channels={@channels} id="top-carousel" muted />
+        </div>
+      </div>
 
       {#if length(@channels) > 0}
-      <div class="container container-stream-list">
-      <div class="row">
-      {#for channel <- @channels}
-       <ChannelPreview channel={channel} class="col-sm-12 col-md-6 col-xl-4 mt-2 mt-md-4" />
-      {/for}
-      </div>
-       </div>
-       {/if}
+        <div class="container container-stream-list">
+          <div class="row">
+            {#for channel <- @channels}
+              <ChannelPreview channel={channel} class="col-sm-12 col-md-6 col-xl-4 mt-2 mt-md-4" />
+            {/for}
+          </div>
+        </div>
+      {/if}
 
       <div class="container">
         <div class="mt-4 px-4 px-lg-0">
@@ -65,7 +89,10 @@ defmodule GlimeshWeb.HomepageLive do
 
     [live_featured_event, live_featured_event_channel] = get_random_event()
 
-    channels = if is_nil(live_featured_event_channel), do: [ raw_channels ], else: [ live_featured_event_channel | raw_channels ]
+    channels =
+      if is_nil(live_featured_event_channel),
+        do: raw_channels,
+        else: [live_featured_event_channel | raw_channels]
 
     user_count = Glimesh.Accounts.count_users()
 
@@ -154,6 +181,10 @@ defmodule GlimeshWeb.HomepageLive do
         {:ok, [nil, nil]}
       end
     end)
+  end
+
+  def handle_event("webrtc_error", value, socket) do
+    {:noreply, socket}
   end
 
   defp get_stream_thumbnail(%Glimesh.Streams.Channel{} = channel) do

@@ -38,6 +38,7 @@ $fa-font-path: "/fa-fonts";
 
 // Glimesh SCSS
 @import "glimesh/components/calendar";
+@import "glimesh/components/carousel";
 @import "glimesh/components/choices";
 @import "glimesh/components/live-modal";
 @import "glimesh/components/img-avatar";
@@ -358,15 +359,4 @@ $fa-font-path: "/fa-fonts";
 
 .EventsTeam_Font {
     color: #288b8c
-}
-
-//homepage carousel
-
-.carousel-caption {
-    max-width: 100%;
-    width:100%;
-    background: rgba(15, 2, 46, 0.24);
-    left: 0;
-    padding: 10px;
-    justify-content: start;
 }
